@@ -12,31 +12,31 @@ from ocpmodels import models
 from ocpmodels.common import logger
 from ocpmodels.common.utils import setup_logging
 
-# data_list = 'data.pkl'
+data_list = 'data.pkl'
 
-# with open(data_list, 'rb') as f:
-#     Data = pickle.load(f)
+with open(data_list, 'rb') as f:
+    Data = pickle.load(f)
     
-# print('create LMDB database')
-# print('create data set')
+print('create LMDB database')
+print('create data set')
 
-# db = lmdb.open(
-#     "data/test_set.lmdb",
-#     #map_size=10e1,
-#     subdir=False,
-#     meminit=False,
-#     map_async=True,
-#     map_size = (10**9) # 10 gb
-# )
+db = lmdb.open(
+    "data/test_set.lmdb",
+    #map_size=10e1,
+    subdir=False,
+    meminit=False,
+    map_async=True,
+    map_size = (10**9) # 10 gb
+)
 
-# idx = 0
-# for tmp in tqdm(Data[int(len(Data)*0.9):]):
-#     txn = db.begin(write=True)
-#     txn.put(f"{idx}".encode("ascii"), pickle.dumps(tmp, protocol=-1))
-#     txn.commit()
-#     db.sync()
-#     idx += 1
-# db.close()
+idx = 0
+for tmp in tqdm(Data[int(len(Data)*0.9):]):
+    txn = db.begin(write=True)
+    txn.put(f"{idx}".encode("ascii"), pickle.dumps(tmp, protocol=-1))
+    txn.commit()
+    db.sync()
+    idx += 1
+db.close()
 
 task = {
     'dataset': 'single_point_lmdb', # dataset used for the S2EF task
