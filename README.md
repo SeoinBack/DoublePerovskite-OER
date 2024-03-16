@@ -2,36 +2,42 @@
 
 # Installation
 
-- need to install 'ocp' 
-
-https://github.com/Open-Catalyst-Project/ocp/tree/main
+- need to install 'ocp' (https://github.com/Open-Catalyst-Project/ocp/tree/main)
+- install the '''ocp''' package with '''pip install -e .'''.
 
 # Guide
 
-- make Graph data and your lmdb dataset
+- first, you need to make your dataset for predict binding energy
+- Use the data_preprocessing.py
 ```
-tmp = AtomToData()
-tmp.S2EF(Data_list) # Data_list is list of ase Atoms : [[Atoms1, Ad_energy], [Atoms2, Ad_energy] ... ]
-tmp.MakeLmdb(name='data', ratio_list=None) # name : file name, default of ratio_list is [0.8, 0.1, 0.1]
-```
-
-- dataset imformation for train and validation and predict
-```
-train_src = 'data/name_train.lmdb'
-val_src = 'data/name_validataion.lmdb'
-test_src = 'data/name_test.lmdb'
-
-dataset = [{'src':train_src},
-            {'src':val_src},
-            {'src':test_src} # recommand do not input test_src for train -> #{'src':test_src}
-          ]
+data_list = 'Enter_your_data_list' : enter your data list for relaxation (['name1', 'name2',...])
+checkpoint = 'Enter_your_checkpoint_for_relaxation.pt'
 ```
 
-- predict GemnetOC
+- Second, you can obtain predicted energy values by running run_OCP.py
+- Change your dataset into lmdb
 ```
-checkpoint_path = '~~~' # checkpoitn file name
+data_list = 'data.pkl' : enter your dataset
+
+with open(data_list, 'rb') as f:
+    Data = pickle.load(f)
+    
+print('create LMDB database')
+print('create data set')
+
+db = lmdb.open(
+    "data/test_set.lmdb",
+    #map_size=10e1,
+    subdir=False,
+    meminit=False,
+    map_async=True,
+    map_size = (10**9) # 10 gb
+)
+```
+
+- Set checkpoint
+```
+checkpoint_path = 'enter_your_checkpoint' # checkpoitn file name
 pretrained_trainer.load_checkpoint(checkpoint_path=checkpoint_path)
 predictions = pretrained_trainer.predict(pretrained_trainer.test_loader, results_file="predict_result", disable_tqdm=False)
 ```
-
-- You can obtain energy prediction values by running run_ocp.py.
