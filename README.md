@@ -3,7 +3,7 @@
 # Installation
 
 - need to install 'ocp' (https://github.com/Open-Catalyst-Project/ocp/tree/main)
-- install the '''ocp''' package with '''pip install -e .'''.
+- install the 'ocp' package with 'pip install -e .'.
 
 # Guide
 
