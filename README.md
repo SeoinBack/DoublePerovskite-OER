@@ -7,10 +7,10 @@
 
 # Guide
 
-- first, you need to make your dataset for predict binding energy
+- first, you need to obtain an relaxed structure using gemnet-OC.
 - Use the data_preprocessing.py
 ```
-data_list = 'Enter_your_data_list' : enter your data list for relaxation (['name1', 'name2',...])
+data_list = 'Enter_your_data_list' : enter your data list for relaxation (['name1', 'name2',...] # initial structure)
 checkpoint = 'Enter_your_checkpoint_for_relaxation.pt'
 ```
 
