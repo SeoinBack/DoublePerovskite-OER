@@ -10,7 +10,7 @@
  
     - `02_predict_stability.ipynb` for fingerprinting and ML predictions.
  
-    - `02_generate_surface.ipynb` for DP surface structures generation.
+    - `03_generate_surface.ipynb` for DP surface structures generation.
 
 - Generated and calculated DP bulk structures can be found in `data/`.
 
