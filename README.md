@@ -1,41 +1,17 @@
-# Gemnet-OC_for_double_provskite
-
-# Installation
-
-- need to install 'ocp' (https://github.com/Open-Catalyst-Project/ocp/tree/main)
-- install the 'ocp' package with 'pip install -e .'.
+# High-Throughput Machine Learning Screening of Double Perovskites 
 
 # Guide
 
-- Use the data_preprocessing.py to relax your structures with Gemnet-OC2022-IS2RE. The following line in data_preprocessing.py can be changed to change your data and the model.
-```
-data_list = 'Enter_your_data_list' : enter your data list for relaxation (['name1', 'name2',...] # initial structure)
-checkpoint = 'Enter_your_checkpoint_for_relaxation.pt'
-```
+- You can reproduce part of our work with Juypter Notebook files in `scripts/`.
 
-- Run the run_OCP.py to obtain binding energy with the transferred model. This code will make lmdb data from the relaxed structure and predict binding energy. The following lines can be changed to edit the data set and model.
-```
-data_list = 'data.pkl' : enter your dataset
+    - `00_generate_DP.ipynb` for DP bulk structures generation.
+      
+    - `01_calculate_stability.ipynb` for Pourbaix decomposition energy and energy above hull calculations from trajectories with DFT calculated energy.
+ 
+    - `02_predict_stability.ipynb` for fingerprinting and ML predictions.
+ 
+    - `02_generate_surface.ipynb` for DP surface structures generation.
 
-with open(data_list, 'rb') as f:
-    Data = pickle.load(f)
-    
-print('create LMDB database')
-print('create data set')
+- Generated and calculated DP bulk structures can be found in `data/`.
 
-db = lmdb.open(
-    "data/test_set.lmdb",
-    #map_size=10e1,
-    subdir=False,
-    meminit=False,
-    map_async=True,
-    map_size = (10**9) # 10 gb
-)
-```
-
-- Set checkpoint
-```
-checkpoint_path = 'enter_your_checkpoint' # checkpoitn file name
-pretrained_trainer.load_checkpoint(checkpoint_path=checkpoint_path)
-predictions = pretrained_trainer.predict(pretrained_trainer.test_loader, results_file="predict_result", disable_tqdm=False)
-```
+- Details of Gemnet-OC model for binding Gibbs free energy prediction can be found in `Gemnet-OC_for_DP/`.
